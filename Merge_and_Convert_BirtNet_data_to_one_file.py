@@ -4,6 +4,13 @@ import pandas
 import os
 import glob
 
+######################################################################
+# The first script just combines the separate CSV -Data from Birdnet. 
+# It expects the following naming scheme:
+# project_YYYYmmdd_HHMMSS.BirdNET.results.csv
+######################################################################
+
+
 # variable
 ## folders
 folder_with_birdnet_csv = r"C:\Users\juergen.foerth\Documents\PythonProjekte\Aichtal"
