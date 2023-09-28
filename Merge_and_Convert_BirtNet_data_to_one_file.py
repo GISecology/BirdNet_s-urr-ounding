@@ -4,21 +4,38 @@ import pandas
 import os
 import glob
 
-######################################################################
-# The first script just combines the separate CSV -Data from Birdnet. 
-# It expects the following naming scheme:
-# project_YYYYmmdd_HHMMSS.BirdNET.results.csv
-######################################################################
+#######################################################################################
+# Documentation
+#######################################################################################
+# 
+# Input: folder with CSV-Data from Birdnet
+#
+# CSV-file naming scheme:
+# * <project>_YYYYmmdd_HHMMSS.BirdNET.results.csv
+# OR
+# * YYYYmmdd_HHMMSS.BirdNET.results.csv
+#
+# This script combines all the CSV-tables what you get from Birdnet.
+# After loading soundfiles (.wav) derived from AudioMoth or other recording-sources.
+# It expects either the projectname in the beginning of filename or
+# if the file starts with datetime string you can set the project name in the script. 
+# #
+#######################################################################################
 
 
-# variable
+# Variables
+## project name - it only takes effect if the file name doesn't start with a date string
+project_name = "_write your project name here_"
+
 ## folders
-folder_with_birdnet_csv = r"C:\Users\juergen.foerth\Documents\PythonProjekte\Aichtal"
-folder_for_merged_xlsx = r"C:\Users\juergen.foerth\Documents\PythonProjekte"
+folder_with_birdnet_csv = r"C:\Users\<user>\projects\birdnet_tables"
+folder_for_merged_xlsx = r"C:\Users\<user>\project\xlsx"
 
 ## Local time
 timezone = 'Europe/Berlin'
 
+
+# functionality starts here:
 # get workspace
 workspace_folder = os.getcwd()
 print(os.getcwd())
@@ -35,8 +52,14 @@ for file in csv_file_list:
     print(f_name)
 
     # slice file name into project and datetime -strings
-    datetime = f_name[f_name.find("_")+1:-20]
-    project = f_name[:f_name.find("_")]
+    print(str(f_name[:f_name.find("_")]))
+    if f_name[:f_name.find("_")].isdigit() == True:
+        datetime = f_name[:-20]
+        project = project_name
+    else:
+        datetime = f_name[f_name.find("_")+1:-20]
+        project = f_name[:f_name.find("_")]
+
     date = datetime[:8]
     time = datetime[9:]
     print(project)
